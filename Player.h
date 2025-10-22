@@ -43,7 +43,6 @@ public:
 	void SetMapChipField(MapChipField* mapChipField) { mapChipField_ = mapChipField; }
 
 private:
-
 	// 左右
 	enum class LRDirection {
 		kRight,
@@ -51,15 +50,16 @@ private:
 	};
 
 	KamataEngine::Camera* camera_ = nullptr;
-
 	KamataEngine::Model* model_ = nullptr;
-
 	KamataEngine::WorldTransform worldTransform_;
-
 	KamataEngine::Vector3 velocity_;
 
+#pragma region 定数
+	// 加速度<単位: マス/フレーム^2>
 	static inline const float kAcceleration_ = 0.01f;
+	// 減速度<単位: マス/フレーム^2>
 	static inline const float kAttenuation_ = 0.03f;
+	// 最高速度<単位: マス/フレーム>
 	static inline const float kLimitRunSpeed_ = 2.0f;
 	// 旋回時間<秒>
 	static inline const float kTimeTurn = 0.3f;
@@ -70,31 +70,36 @@ private:
 	// ジャンプ初速(上方向)
 	static inline const float kJumpAcceleration_ = 0.6f;
 	// キャラクターの当たり判定サイズ
-	/*static inline const float kWidth = 0.99f;
-	static inline const float kHeight = 0.99f;*/
-	static inline const float kWidth = 1.9f;
-	static inline const float kHeight = 1.9f;
-
-	static inline const float kAttenuationLanding = 0.2f;
+	static inline const float kWidth = 0.99f;
+	static inline const float kHeight = 0.99f;
+	/*static inline const float kWidth = 1.9f;
+	static inline const float kHeight = 1.9f;*/
 	// 接地判定のときだけ使う微調整用の下方向余白
 	static inline const float kSnapFeetMargin = 0.01f; // 0.03
+	// 最大ジャンプ回数
+	const int kMaxJumps_ = 2;
+#pragma endregion
 
+#pragma region 左右旋回
+	// 左右方向
 	LRDirection lrDirection_ = LRDirection::kRight;
-
 	// 旋回開始時の角度
 	float turnFirstRotationY_ = 0.0f;
 	// 旋回タイマー
 	float turnTimer_ = 0.0f;
-
 	// 旋回アニメーション用
 	float rotationStartY_ = 0.0f;   // 開始角度
 	float rotationEndY_ = 0.0f;     // 終了角度
 	float rotationTimer_ = 0.0f;    // 経過時間
 	float rotationDuration_ = 0.2f; // 補間にかける時間（秒数）
-
+#pragma endregion
 	// 設置状態フラグ
 	bool onGround_ = true;
 
 	// マップチップによるフィールド
 	MapChipField* mapChipField_ = nullptr;
+
+	/* 二段ジャンプ */
+	int jumpCount_ = 0; // ジャンプ回数カウント
+	bool jumpHeldPrev_ = false; // 前フレームのジャンプボタン押下状態
 };

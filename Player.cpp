@@ -16,7 +16,7 @@ void Player::Initialize(KamataEngine::Model* model, KamataEngine::Camera* camera
 	assert(camera);
 
 	worldTransform_.Initialize();
-	worldTransform_.scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_.scale_ = {0.5f, 0.5f, 0.5f};
 	worldTransform_.rotation_.y = std::numbers::pi_v<float> / 2.0f;
 	worldTransform_.translation_ = position;
 
@@ -129,17 +129,25 @@ void Player::ApplyMoveInput() {
 		// 非入力時は移動減衰をかける
 		velocity_.x *= (1.0f - kAttenuation_);
 	}
-	if (onGround_) {
-		if (Input::GetInstance()->PushKey(DIK_UP)) {
-			// ジャンプ初速
-			velocity_.y += kJumpAcceleration_;
-		}
-	} else {
+
+	bool jumpHeldNow = Input::GetInstance()->PushKey(DIK_UP);
+	bool jumpPressed = (jumpHeldNow && !jumpHeldPrev_);
+
+	if (jumpPressed && (onGround_|| jumpCount_ < kMaxJumps_)) {
+		// ジャンプ初速
+		velocity_.y = kJumpAcceleration_;
+		onGround_ = false;
+		jumpCount_++;
+	}
+	// 空中なら重力
+	if (!onGround_) {
 		// 落下速度
 		velocity_.y += -kGravityAcceleration_;
 		// 落下速度制限
 		velocity_.y = std::fmaxf(velocity_.y, -kLimitFallSpeed_);
 	}
+
+	jumpHeldPrev_ = jumpHeldNow;
 }
 
 void Player::CheckCollisionMapTop(CollisionMapInfo& info) {
@@ -197,9 +205,6 @@ void Player::CheckCollisionMapTop(CollisionMapInfo& info) {
 }
 
 void Player::CheckCollisionMapBottom(CollisionMapInfo& info) {
-	/*if (info.velocity.y >= 0.0f) {
-	    return;
-	}*/
 	bool hit = false;
 	bool isSnapCheck = (!onGround_ && info.velocity.y >= 0.0f);
 
@@ -393,6 +398,7 @@ void Player::ApplyGroundState(const CollisionMapInfo& info) {
 		// 空中にいて、地面に当たったら設置状態に
 		if (info.isHitBottom) {
 			onGround_ = true;
+			jumpCount_ = 0;
 		}
 	}
 }
