@@ -1,10 +1,8 @@
 #include <Windows.h>
 #include "KamataEngine.h"
-#include "GameScene.h"
+#include "Game.h"
 
 using namespace KamataEngine;
-
-GameScene* gameScene = nullptr;
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
@@ -12,10 +10,10 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 
 	// エンジンの初期化
-	KamataEngine::Initialize(L"LE2B_25_ミヤザキ_ユウタ_AL4");
+	KamataEngine::Initialize(L"LE2B_25_ミヤザキ_ユウタ_OrangeGun");
 
-	gameScene = new GameScene();
-	gameScene->Initialize();
+	Game* game = new Game();
+	game->Initialize();
 
 
 	while (true) {
@@ -24,19 +22,19 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			break;
 		}
 
-		gameScene->Update();
+		game->Update();
 
 		// 描画開始
 		dxCommon->PreDraw();
 
-		gameScene->Draw();
+		game->Draw();
 
 		// 描画終了
 		dxCommon->PostDraw();
 
 	}
 
-	delete gameScene;
+	delete game;
 
 	// エンジンの終了
 	KamataEngine::Finalize();

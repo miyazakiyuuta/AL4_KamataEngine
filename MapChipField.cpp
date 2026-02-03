@@ -9,7 +9,8 @@ using namespace KamataEngine;
 namespace {
 std::map<std::string, MapChipType> mapChipTable = {
     {"0", MapChipType::kBlank},
-    {"1", MapChipType::kBlock},
+    {"1", MapChipType::kNormalBlock},
+    {"2", MapChipType::kFallBlock},
 };
 }
 

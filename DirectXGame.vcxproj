@@ -154,11 +154,24 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyBullet.cpp" />
+    <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameClearScene.cpp" />
+    <ClCompile Include="GameOverScene.cpp" />
+    <ClCompile Include="GamePlayScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapChipField.cpp" />
     <ClCompile Include="Matrix4x4.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerBullet.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Skydome.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="WorldTransformUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -259,11 +272,24 @@
     <None Include="Resources\shaders\Sprite.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseScene.h" />
+    <ClInclude Include="CameraController.h" />
     <ClInclude Include="Collision.h" />
-    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyBullet.h" />
+    <ClInclude Include="Fade.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameClearScene.h" />
+    <ClInclude Include="GameOverScene.h" />
+    <ClInclude Include="GamePlayScene.h" />
     <ClInclude Include="MapChipField.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerBullet.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Skydome.h" />
+    <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="Vector3.h" />
     <ClInclude Include="WorldTransformUtility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
